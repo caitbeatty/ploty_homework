@@ -12,6 +12,7 @@ d3.json("samples.json").then((data)=> {
 
     // Be able to click on an ID and have it recognize it - On change to the DOM, call getData()
     d3.selectAll("#selDataset").on("change", getData);
+
 // Function called by DOM changes
 function getData() {
     var dropdownMenu = d3.select("#selDataset");
@@ -101,35 +102,23 @@ function getData() {
       
 
       // //make chart to show id, ethnicity, gender, age, location, bbtype, wfreq
-        var table = d3.select("#sample-metadata");
-        var tbody = table.select("tbody");
-        var trow;
-          trow = tbody.append("tr");
-          trow.append("td").text(requiredDemo.id);
-          trow.append("td").text(requiredDemo.ethnicity);
-          trow.append("td").text(requiredDemo.gender);
-          trow.append("td").text(requiredDemo.age);
-          trow.append("td").text(requiredDemo.location);
-          trow.append("td").text(requiredDemo.bbtype);
-          trow.append("td").text(requiredDemo.wfreq);
+        var demoInfo = d3.select("#sample-metadata");
+
+          // build the metadata table
+      demoInfo.html("");
+      Object.entries(requiredDemo).forEach(([key, value]) => {
+          demoInfo.append("p").text(`${key}: ${value}`)
+      });
+     
+ 
         
-      
-      
-      
-
-
-
-
-
-
-
 
 
 
    
   }
   
-  
+  getData();
 
    
 })
