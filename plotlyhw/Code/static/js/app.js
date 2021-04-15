@@ -58,8 +58,64 @@ function getData() {
       };
     
       Plotly.newPlot("bar", barData, layout);
-    
-    
+
+
+      // make bubble chart
+
+      var bubbleLayout = {
+        title: "Bacteria Cultures Per Sample",
+        margin: { t: 0 },
+        hovermode: "closest",
+        xaxis: { title: "OTU ID" },
+        margin: { t: 30}
+      };
+      
+      var bubbleData = [
+        {
+          x: otuIds,
+          y: sampleValues,
+          text: otuLabels,
+          mode: "markers",
+          marker: {
+            size: sampleValues,
+            color: otuIds,
+            colorscale: "Jet",
+            type: 'heatmap'
+          }
+        }
+      ];
+      
+      Plotly.newPlot("bubble", bubbleData, bubbleLayout);
+  
+
+     
+
+//demographic info
+      //get array for data in metadata
+      var demographics = Object.values(data[0].metadata);
+
+     
+
+      // //put data that used picked into a dictionary of its own
+      var requiredDemo = demographics.filter(checkID)[0];
+      
+
+      // //make chart to show id, ethnicity, gender, age, location, bbtype, wfreq
+        var table = d3.select("#sample-metadata");
+        var tbody = table.select("tbody");
+        var trow;
+          trow = tbody.append("tr");
+          trow.append("td").text(requiredDemo.id);
+          trow.append("td").text(requiredDemo.ethnicity);
+          trow.append("td").text(requiredDemo.gender);
+          trow.append("td").text(requiredDemo.age);
+          trow.append("td").text(requiredDemo.location);
+          trow.append("td").text(requiredDemo.bbtype);
+          trow.append("td").text(requiredDemo.wfreq);
+        
+      
+      
+      
 
 
 
@@ -69,8 +125,6 @@ function getData() {
 
 
 
-    //console.log(sampleV)
-    //var id = unpack(sampleV, 0);
 
    
   }
